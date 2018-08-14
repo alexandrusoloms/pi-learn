@@ -10,4 +10,7 @@ y = [4 + 2 * x for x in X]
 
 sgd = PiStochasticGradientDescent(X=X, y=y)
 sgd.fit()
-print(sgd.predict(X=X))
+y_pred = (sgd.predict(X=X))
+
+for ind, i in enumerate(y_pred):
+    print('y_pred -->{}, real--->{}'.format(i, y[ind])) 
