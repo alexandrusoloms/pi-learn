@@ -5,8 +5,9 @@ from GD import PiStochasticGradientDescent
 import numpy as np
 from base import PiBaseRegression
 
-X = np.linspace(0, 10, 100).reshape(-1, 1)
-y = [4 + 2 * x for x in X]
+X = np.linspace(0, 1, 100).reshape(-1, 1)
+y = np.array(list(4.5 + x*10 + np.random.poisson() for x in X))
+X = np.c_[np.ones(len(X)), X]
 
 sgd = PiStochasticGradientDescent(X=X, y=y)
 sgd.fit()
