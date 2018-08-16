@@ -17,5 +17,5 @@ class PiBaseRegression(ABC):
         return self
 
     @abstractmethod
-    def predict(self):
-        return self
+    def predict(self, X):
+        return X.dot(self.coefficients)

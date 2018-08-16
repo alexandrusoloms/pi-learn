@@ -2,33 +2,6 @@ from abc import ABC, abstractmethod
 import numpy as np
 from ..base import PiBaseRegression
 
-# class PiBaseRegression(ABC):
-#     """
-#     this is a base class for all regressions
-#     in the Raspy library
-#     """
-#     @abstractmethod
-#     def __init__(self, X, y):
-#         """
-#         all supervised regressions will need an ``X`` and a ``y``.
-#
-#         :param X: <np.ndarray> features
-#         :param y: <np.ndarray> labels
-#         """
-#         self.n_samples, self.n_features = X.shape
-#         self.X = X
-#         self.y = y
-#         self.coefficients = None
-#         super(PiBaseRegression, self).__init__()
-#
-#     @abstractmethod
-#     def fit(self):
-#         return self
-#
-#     @abstractmethod
-#     def predict(self, X):
-#         return self
-
 
 class PiLinearRegression(PiBaseRegression):
     """
@@ -49,5 +22,4 @@ class PiLinearRegression(PiBaseRegression):
         """
         given ``X`` this method predicts y_pred
         """
-        super().predict(X=X)
-        return X.dot(self.coefficients)
+        return super().predict(X=X)
