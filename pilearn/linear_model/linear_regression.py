@@ -1,4 +1,3 @@
-from abc import ABC, abstractmethod
 import numpy as np
 from ..base import PiBaseRegression
 
@@ -11,11 +10,11 @@ class PiLinearRegression(PiBaseRegression):
     def __init__(self, X, y):
         super(PiLinearRegression, self).__init__(X=X, y=y)
 
-    def fit(self):
+    def fit(self, fit_intercept=True):
         """
         fit linear regression
         """
-        super().fit()
+        super().fit(fit_intercept=fit_intercept)
         self.coefficients = np.linalg.inv(self.X.T.dot(self.X)).dot(self.X.T.dot(self.y))
 
     def predict(self, X):

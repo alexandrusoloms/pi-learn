@@ -10,12 +10,20 @@ class PiBaseRegression(ABC):
         self.X = X
         self.y = y
         self.coefficients = None
+        self.fit_intercept = None
         super(PiBaseRegression, self).__init__()
 
     @abstractmethod
-    def fit(self):
+    def fit(self, fit_intercept=True):
+        self.fit_intercept = fit_intercept
+        if not fit_intercept:
+            self.X = self.X[:, 1:]
+            self.n_features = self.n_features - 1
         return self
 
     @abstractmethod
     def predict(self, X):
-        return X.dot(self.coefficients)
+        if not self.fit_intercept:
+            return X[:, 1:].dot(self.coefficients)
+        else:
+            return X.dot(self.coefficients)
