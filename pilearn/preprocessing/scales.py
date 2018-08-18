@@ -1,34 +1,46 @@
 import numpy as np
+from .base import PiBasePreprocessing
 
 
-def min_max_scaler(X):
+class PiMinMaxScaler(PiBasePreprocessing):
     """
-    rescale between 0, 1
+    ``PiMinMaxScaler`` inherits the abstractmethod ``PiBaseRegression``
     """
-    list_of_arrays = list()
-    n_samples, n_features = X.shape
-    for i in X.T:
-        if len(set(i)) == n_samples:
+    def __init__(self, X):
+        super(PiMinMaxScaler, self).__init__(X=X)
+
+    def fit(self):
+        for i in self.X.T:
             normed_val = [(j - min(i)) / (max(i) - min(i)) for j in i]
-            list_of_arrays.append(normed_val)
-        else:
-            list_of_arrays.append(i)
-    return np.c_[list_of_arrays].T
+            self.list_of_arrays.append(normed_val)
 
+    def transform(self):
+        self.transformed = np.c_[self.list_of_arrays].T
 
-def mean_variance_scaler(X):
+    def fit_transform(self):
+        self.fit()
+        self.transform()
+        return self.transformed
+
+class PiMeanVarianceScaler(PiBasePreprocessing):
     """
-    reduce to mean 0, std 1.
+    <to add>
     """
-    list_of_arrays = list()
-    n_samples, n_features = X.shape
-    for i in X.T:
-        if len(set(i)) == n_samples:
+    def __init__(self, X):
+        super(PiMeanVarianceScaler, self).__init__(X=X)
+
+    def fit(self):
+        for i in self.X.T:
             normed_val = [(j - np.mean(i)) / np.std(i) for j in i]
-            list_of_arrays.append(normed_val)
-        else:
-            list_of_arrays.append(i)
-    return np.c_[list_of_arrays].T
+            self.list_of_arrays.append(normed_val)
+
+    def transform(self):
+        self.transformed = np.c_[self.list_of_arrays].T
+
+    def fit_transform(self):
+        self.fit()
+        self.transform()
+        return self.transformed
 
 def make_one_hot(X):
     """
