@@ -6,26 +6,30 @@ from .kernels import K_bicube, K_Epanechnikov, K_Gaussian, K_triangular, K_tricu
 class PiNonParametericRegression(PiBaseNonParametricRegression):
     def __init__(self, X, y, bandwidth, kernel='E'):
         super(PiNonParametericRegression, self).__init__(X=X, y=y)
-        self.bandwith = bandwith
+        self.bandwidth = bandwidth
         self.kernel = kernel
 
-    def m(cls, xi, kernel):
-        """
-        local fit regression
+    @staticmethod
+    def __epanechnikov(x):
+        # Epanechnikov Kernel
+        if isinstance(x, np.ndarray):
+            x = np.sqrt(np.sum(x.T.dot(x)))
+        if abs(x) > 1:
+            return 0
+        else:
+            return 3 / 4 * (1 - x**2)
 
-        :param xi: the x value
-        :param kernel: a Choice arg
-        :param h: bandwidth
+    def predict(self, X):
+        fx_list = list()
+        for b in X:
+            o = [self.__epanechnikov(i) for i in
+                [[(b- xi)/self.bandwidth][0]  for xi in X]]
 
-        """
-        y_list = []
-        x_list = []
+            O = np.eye(self.n_samples) * np.array(o).reshape(-1, 1)
 
-        for i in range(len(cls.X)):
-            sub_m = (cls.X[i] - xi) / self.bandwith
-            y_list.append(kernel(sub_m) * cls.y[i])
-            x_list.append(kernel(sub_m))
-
-        return np.sum(y_list) / np.sum(x_list)
-
-    def predict():
+            f_x = O.dot(X).dot(np.linalg.inv(X.T.dot(O).dot(X))).dot(b).T.dot(self.y)
+            # b.dot(np.linalg.inv(X.T.dot(O).dot(X))).dot(X.T).dot(O).dot(y)
+            # O.dot(X).dot(np.linalg.inv(X.T.dot(O).dot(X))).dot(b).T.dot(self.y)
+            #
+            fx_list.append(f_x.tolist())
+        return fx_list

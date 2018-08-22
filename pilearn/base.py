@@ -35,7 +35,7 @@ class PiBaseNonParametricRegression(ABC):
         self.n_samples, self.n_features = X.shape
         self.X = X
         self.y = y
-        super(PiBaseRegression, self).__init__()
+        super(PiBaseNonParametricRegression, self).__init__()
 
     @abstractmethod
     def predict(self, X):
