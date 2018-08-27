@@ -5,7 +5,6 @@ from .ridge import PiRidgeRegression
 
 __all__ = [
     'PiLinearRegression',
-    'PiBaseRegression',
     'PiRidgeRegression',
     'PiGradientDescent',
     'PiStochasticGradientDescent'

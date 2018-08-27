@@ -38,7 +38,7 @@ class PiBaseNonParametricRegression(ABC):
         super(PiBaseNonParametricRegression, self).__init__()
 
     @abstractmethod
-    def predict(self, X):
+    def fit_predict(self, X):
         # not implemented here
         pass
 
