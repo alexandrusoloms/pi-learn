@@ -5,16 +5,19 @@ import numpy as np
 class PiBaseRegression(ABC):
 
     @abstractmethod
-    def __init__(self, X, y):
-        self.n_samples, self.n_features = X.shape
-        self.X = X
-        self.y = y
+    def __init__(self):
+        self.n_samples, self.n_features = None, None
+        self.X = None
+        self.y = None
         self.coefficients = None
         self.fit_intercept = None
         super(PiBaseRegression, self).__init__()
 
     @abstractmethod
-    def fit(self, fit_intercept=True):
+    def fit(self, X, y, fit_intercept=True):
+        self.X = X
+        self.y = y
+        self.n_samples, self.n_features = X.shape
         self.fit_intercept = fit_intercept
         if not fit_intercept:
             self.X = self.X[:, 1:]
@@ -27,6 +30,7 @@ class PiBaseRegression(ABC):
             return X[:, 1:].dot(self.coefficients)
         else:
             return X.dot(self.coefficients)
+
 
 class PiBaseNonParametricRegression(ABC):
 
@@ -41,6 +45,7 @@ class PiBaseNonParametricRegression(ABC):
     def fit_predict(self, X):
         # not implemented here
         pass
+
 
 class PiBaseClassifier(ABC):
 
@@ -67,3 +72,27 @@ class PiBaseClassifier(ABC):
             return X[:, 1:].dot(self.coefficients)
         else:
             return X.dot(self.coefficients)
+
+
+class PiBaseIterative(ABC):
+
+    @abstractmethod
+    def __int__(self):
+        self.coefficients = None
+        pass
+    
+    @abstractmethod
+    def calculate_hypothesis(self):
+        pass
+
+    @abstractmethod
+    def compute_cost(self):
+        pass
+
+    @abstractmethod
+    def fit(self):
+        pass
+
+    @abstractmethod
+    def predict(self, X):
+        return X.dot(self.coefficients)
