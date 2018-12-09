@@ -72,7 +72,7 @@ class MoG(object):
     def plot(self, title, figs_path, n=11):
 
         # palette = ['r', 'b', 'y', 'm', 'c', '']
-        plt.scatter(self.X[:, 0], self.X[:, 1], alpha=.7)
+        # plt.scatter(self.X[:, 0], self.X[:, 1], alpha=.7)
         for i in range(self.k):
 
             theta = np.array(list(range(n))) / (n - 1) * 2 * np.pi
